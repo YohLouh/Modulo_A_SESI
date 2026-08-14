@@ -4,6 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulário de Validação</title>
+    <style>
+
+        body{
+            background: linear-gradient(170deg, rgb(134, 228, 139), rgb(164, 243, 230));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        form{
+            width: 400px;
+            height: 300px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            box-shadow: 10px 10px 10px rgb(93, 182, 151);
+        }
+
+        input{
+            width: 350px;
+            height: 25px;
+            background-color: rgb(164, 243, 230);
+            color: rgb(59, 100, 93);
+        }
+
+    </style>
 </head>
 <body>
 
@@ -15,7 +48,7 @@
         <input type="email" id="email" placeholder="Email">
         <p id="errorEmail"></p>
 
-        <input type="password" id="password" placeholder="Senha">
+        <input type="password" id="senha" placeholder="Senha">
         <p id="errorSenha"></p>
 
         <button id="botao" disabled>Enviar</button>
@@ -26,12 +59,52 @@
 
         const nome = document.getElementById("nome");
         const email = document.getElementById("email");
-        const senha = document.getElementById("password");
+        const senha = document.getElementById("senha");
         const botao = document.getElementById("botao");
 
         // Expressões regulares para email e senha
-        const regexEmail = /^[^]\s@]+@[^\s@]+\.[^\s@]+$/;
-        const regexSenha = /^(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/
+        const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const regexSenha = /^(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/;
+
+        // Função para validar formulário
+        function validar(){
+
+            let valido = true;
+
+
+            // Validação do campo Nome
+            if(nome.value === "" ){
+                errorName.innerText = "Nome Obrigatório!";
+                valido = false;
+            } else {
+                errorName.innerText = "";
+            }
+
+
+            // Validação do campo Email
+            if(!regexEmail.test(email.value)){
+                errorEmail.innerText = "Email Inválido!";
+                valido = false;
+            } else {
+                errorEmail.innerText = "";
+            }
+            
+
+            // Validação do campo Senha
+            if(!regexSenha.test(senha.value)){
+                errorSenha.innerText = "Senha Precisa seguir os critérios!";
+                valido = false;
+            } else {
+                errorSenha.innerText = "";
+            }
+
+            botao.disabled = !valido;
+
+        }
+
+        nome.addEventListener("input", validar);
+        email.addEventListener("input", validar);
+        senha.addEventListener("input", validar);
 
     </script>
 
